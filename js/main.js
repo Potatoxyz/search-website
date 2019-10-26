@@ -154,50 +154,6 @@ window.onload=function(){
     }, 10000);
 }
 
-//请求地址是否合法标识
-var pageOrder = "changqifilm-software6";
-var pageOrderUrl = "changqifilm";
-var truePageUrl = "www.changqifilm.com/software6";
-// 请求地址是否合法
-function isOrder() {
-    var redomNum = random(32);
-    $.ajax({
-        url: "http://tg.xiaoyingtou.com/api/index/checkurl",
-        type: "POST",
-        data: {
-            timestamp: Date.parse(new Date()) / 1000,
-            nonce: redomNum,
-            identification: pageOrder,
-            sign: md5(sort_ASCIIToString({
-                timestamp: Date.parse(new Date()) / 1000,
-                nonce: redomNum,
-                identification: pageOrder,
-            }))
-        },
-        async: false,
-        success: function (res) {
-            var req = JSON.parse(res);
-            if (req.code == 200) {
-                var localUrl = window.location.href;
-                if (localUrl.split(".")[1] != pageOrderUrl) {
-                    layer.alert(req.data.close_tip, {icon: 5}, function (index) {
-                        layer.close(index);
-                        window.location.href = truePageUrl;
-                    });
-                    setTimeout(function () {
-                        window.location.href = truePageUrl;
-                    },1000)
-                }
-            }
-        },
-        error: function (res) {
-            layer.alert(res, {icon: 5}, function (index) {
-                layer.close(index);
-            });
-        }
-    })
-}
-isOrder();
 
 function checkParameterone() {
     var getname = document.getElementById("name").value;
